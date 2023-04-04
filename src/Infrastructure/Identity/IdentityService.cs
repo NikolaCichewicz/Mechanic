@@ -1,5 +1,6 @@
 ﻿using Mechanic.Application.Common.Interfaces;
 using Mechanic.Application.Common.Models;
+using Mechanic.Domain.Entities.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 using Mechanic.Application.Common.Interfaces;
 using Mechanic.Domain.Entities;
-using Mechanic.Infrastructure.Identity;
 using Mechanic.Infrastructure.Persistence.Interceptors;
 using Duende.IdentityServer.EntityFramework.Options;
+using Mechanic.Domain.Entities.Users;
 using MediatR;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;

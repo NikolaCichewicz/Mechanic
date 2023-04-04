@@ -1,4 +1,5 @@
 ﻿using Mechanic.Application.Common.Interfaces;
+using Mechanic.Domain.Entities.Users;
 using Mechanic.Infrastructure.Files;
 using Mechanic.Infrastructure.Identity;
 using Mechanic.Infrastructure.Persistence;

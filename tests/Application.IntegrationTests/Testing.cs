@@ -1,4 +1,5 @@
-﻿using Mechanic.Infrastructure.Identity;
+﻿using Mechanic.Domain.Entities.Users;
+using Mechanic.Infrastructure.Identity;
 using Mechanic.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Identity;

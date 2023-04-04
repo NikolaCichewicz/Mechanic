@@ -2,7 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Mechanic.Application.Common.Interfaces;
 using Mechanic.Application.Common.Security;
-using Mechanic.Domain.Enums;
+using Mechanic.Domain.Enums.Orders;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

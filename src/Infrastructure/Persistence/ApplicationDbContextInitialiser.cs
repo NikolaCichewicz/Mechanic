@@ -1,5 +1,5 @@
 ﻿using Mechanic.Domain.Entities;
-using Mechanic.Infrastructure.Identity;
+using Mechanic.Domain.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

@@ -1,4 +1,6 @@
-﻿namespace Mechanic.Domain.Entities;
+﻿using Mechanic.Domain.Enums.Orders;
+
+namespace Mechanic.Domain.Entities;
 
 public class TodoItem : BaseAuditableEntity
 {
@@ -16,15 +18,7 @@ public class TodoItem : BaseAuditableEntity
     public bool Done
     {
         get => _done;
-        set
-        {
-            if (value == true && _done == false)
-            {
-                AddDomainEvent(new TodoItemCompletedEvent(this));
-            }
-
-            _done = value;
-        }
+        set { }
     }
 
     public TodoList List { get; set; } = null!;

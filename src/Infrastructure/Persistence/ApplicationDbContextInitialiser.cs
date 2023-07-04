@@ -1,5 +1,5 @@
-﻿using Mechanic.Domain.Entities;
-using Mechanic.Domain.Entities.Users;
+﻿using Mechanic.Domain.Entities.Users;
+using Mechanic.Domain.ValueObjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -8,12 +8,13 @@ namespace Mechanic.Infrastructure.Persistence;
 
 public class ApplicationDbContextInitialiser
 {
-    private readonly ILogger<ApplicationDbContextInitialiser> _logger;
     private readonly ApplicationDbContext _context;
+    private readonly ILogger<ApplicationDbContextInitialiser> _logger;
+    private readonly RoleManager<Role> _roleManager;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
 
-    public ApplicationDbContextInitialiser(ILogger<ApplicationDbContextInitialiser> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    public ApplicationDbContextInitialiser(ILogger<ApplicationDbContextInitialiser> logger,
+        ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<Role> roleManager)
     {
         _logger = logger;
         _context = context;
@@ -53,39 +54,36 @@ public class ApplicationDbContextInitialiser
     public async Task TrySeedAsync()
     {
         // Default roles
-        var administratorRole = new IdentityRole("Administrator");
+        await SeedRoles();
 
+        // Default administrator
+        ApplicationUser administrator = new()
+        {
+            UserName = "administrator",
+            Email = "administrator@gmail.com",
+            Firstname = "Administrator",
+            Lastname = "Administrator"
+        };
+
+        if (_userManager.Users.All(u => u.UserName != administrator.UserName))
+        {
+            await _userManager.CreateAsync(administrator, "Administrator1!");
+            await _userManager.AddToRolesAsync(administrator, new[] { Roles.Administrator });
+        }
+    }
+
+    private async Task SeedRoles()
+    {
+        Role administratorRole = new (Roles.Administrator);
         if (_roleManager.Roles.All(r => r.Name != administratorRole.Name))
         {
             await _roleManager.CreateAsync(administratorRole);
         }
 
-        // Default users
-        var administrator = new ApplicationUser { UserName = "administrator@localhost", Email = "administrator@localhost" };
-
-        if (_userManager.Users.All(u => u.UserName != administrator.UserName))
+        Role mechanicRole = new(Roles.Mechanic);
+        if (_roleManager.Roles.All(r => r.Name != mechanicRole.Name))
         {
-            await _userManager.CreateAsync(administrator, "Administrator1!");
-            await _userManager.AddToRolesAsync(administrator, new [] { administratorRole.Name });
-        }
-
-        // Default data
-        // Seed, if necessary
-        if (!_context.TodoLists.Any())
-        {
-            _context.TodoLists.Add(new TodoList
-            {
-                Title = "Todo List",
-                Items =
-                {
-                    new TodoItem { Title = "Make a todo list 📃" },
-                    new TodoItem { Title = "Check off the first item ✅" },
-                    new TodoItem { Title = "Realise you've already done two things on the list! 🤯"},
-                    new TodoItem { Title = "Reward yourself with a nice, long nap 🏆" },
-                }
-            });
-
-            await _context.SaveChangesAsync();
+            await _roleManager.CreateAsync(mechanicRole);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
-using Mechanic.Application.Common.Behaviours;
 using FluentValidation;
+using Mechanic.Application.Common.Behaviours;
 using MediatR;
 
 namespace Microsoft.Extensions.DependencyInjection;

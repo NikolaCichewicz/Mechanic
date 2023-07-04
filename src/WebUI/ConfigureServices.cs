@@ -1,8 +1,8 @@
-﻿using Mechanic.Application.Common.Interfaces;
+﻿using FluentValidation.AspNetCore;
+using Mechanic.Application.Common.Interfaces;
 using Mechanic.Infrastructure.Persistence;
 using Mechanic.WebUI.Filters;
 using Mechanic.WebUI.Services;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using NSwag;
 using NSwag.Generation.Processors.Security;
@@ -23,8 +23,8 @@ public static class ConfigureServices
             .AddDbContextCheck<ApplicationDbContext>();
 
         services.AddControllersWithViews(options =>
-            options.Filters.Add<ApiExceptionFilterAttribute>())
-                .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+                options.Filters.Add<ApiExceptionFilterAttribute>())
+            .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
 
         services.AddRazorPages();
 
@@ -32,18 +32,22 @@ public static class ConfigureServices
         services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
+
         services.AddOpenApiDocument(configure =>
         {
             configure.Title = "Mechanic API";
-            configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-            {
-                Type = OpenApiSecuritySchemeType.ApiKey,
-                Name = "Authorization",
-                In = OpenApiSecurityApiKeyLocation.Header,
-                Description = "Type into the textbox: Bearer {your JWT token}."
-            });
+            configure.AddSecurity("JWT", Enumerable.Empty<string>(),
+                new OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Type into the textbox: Bearer {your JWT token}."
+                });
 
             configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            configure.FlattenInheritanceHierarchy = true;
+            configure.GenerateEnumMappingDescription = true;
         });
 
         return services;

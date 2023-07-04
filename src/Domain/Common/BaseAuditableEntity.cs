@@ -11,7 +11,7 @@ public abstract class BaseAuditableEntity : IBaseAuditableEntity
     public string? LastModifiedBy { get; set; }
 }
 
-public interface IBaseAuditableEntity 
+public interface IBaseAuditableEntity
 {
     public DateTime Created { get; set; }
 

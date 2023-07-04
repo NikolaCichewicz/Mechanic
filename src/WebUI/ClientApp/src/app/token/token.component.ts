@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { AuthorizeService } from "../../api-authorization/authorize.service";
+import {Component, OnInit} from "@angular/core";
+import {AuthorizeService} from "../../api-authorization/authorize.service";
 
 @Component({
   selector: "app-token-component",
@@ -10,7 +10,8 @@ export class TokenComponent implements OnInit {
   isError: boolean = false;
   isCopied: boolean = false;
 
-  constructor(private authorizeService: AuthorizeService) {}
+  constructor(private authorizeService: AuthorizeService) {
+  }
 
   ngOnInit(): void {
     this.isCopied = false;

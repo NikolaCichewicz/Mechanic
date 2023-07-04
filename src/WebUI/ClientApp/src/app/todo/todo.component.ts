@@ -1,9 +1,15 @@
-import { Component, TemplateRef, OnInit } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { TodoListsClient, TodoItemsClient,
-  TodoListDto, TodoItemDto, PriorityLevelDto,
-  CreateTodoListCommand, UpdateTodoListCommand,
-  CreateTodoItemCommand, UpdateTodoItemCommand
+import {Component, OnInit, TemplateRef} from '@angular/core';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {
+  CreateTodoItemCommand,
+  CreateTodoListCommand,
+  PriorityLevelDto,
+  TodoItemDto,
+  TodoItemsClient,
+  TodoListDto,
+  TodoListsClient,
+  UpdateTodoItemCommand,
+  UpdateTodoListCommand
 } from '../web-api-client';
 
 @Component({
@@ -29,7 +35,8 @@ export class TodoComponent implements OnInit {
     private listsClient: TodoListsClient,
     private itemsClient: TodoItemsClient,
     private modalService: BsModalService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.listsClient.get().subscribe(
@@ -186,8 +193,9 @@ export class TodoComponent implements OnInit {
 
     if (item.id === 0) {
       this.itemsClient
-        .create({ ...item, listId: this.selectedList.id
-          } as CreateTodoItemCommand)
+        .create({
+          ...item, listId: this.selectedList.id
+        } as CreateTodoItemCommand)
         .subscribe(
           result => {
             item.id = result;

@@ -1,6 +1,5 @@
 ﻿using Mechanic.Application.Common.Interfaces;
 using Mechanic.Domain.Entities.Users;
-using Mechanic.Infrastructure.Files;
 using Mechanic.Infrastructure.Identity;
 using Mechanic.Infrastructure.Persistence;
 using Mechanic.Infrastructure.Persistence.Interceptors;
@@ -9,12 +8,14 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Mechanic.Infrastructure;
 
 public static class ConfigureServices
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddScoped<AuditableEntitySaveChangesInterceptor>();
 
@@ -36,15 +37,12 @@ public static class ConfigureServices
 
         services
             .AddDefaultIdentity<ApplicationUser>()
-            .AddRoles<IdentityRole>()
+            .AddRoles<Role>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
-
-        services.AddIdentityServer()
-            .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+        services.AddTransient<IIdentityService, IdentityService>();
 
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();
-        services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
         services.AddAuthentication()
             .AddIdentityServerJwt();

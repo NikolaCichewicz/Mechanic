@@ -4,7 +4,9 @@ namespace Mechanic.Domain.Entities.Users;
 
 public class Role : IdentityRole
 {
-    public ICollection<ApplicationUser>? Users { get; set; }
-    
+    public Role(string roleName) : base(roleName) { }
+    public Role() {}
+    public ICollection<ApplicationUser>? Users { get; set; } = null!;
+
     public ICollection<UserRole> UserRoles { get; set; } = null!;
 }

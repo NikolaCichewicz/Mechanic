@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-
 using Mechanic.Application.Common.Interfaces;
 
 namespace Mechanic.WebUI.Services;

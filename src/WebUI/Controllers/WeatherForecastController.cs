@@ -1,7 +1,7 @@
 ﻿using Mechanic.Application.WeatherForecasts.Queries.GetWeatherForecasts;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Mechanic.WebUI.Controllers;
+namespace WebUI.Controllers;
 
 public class WeatherForecastController : ApiControllerBase
 {
